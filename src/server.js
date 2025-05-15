@@ -10,7 +10,6 @@ import {
 } from 'discord-interactions';
 import { HARDTSEE_COMMAND } from './commands.js';
 import { getWaterTemperature } from './hardtsee.js';
-import { InteractionResponseFlags } from 'discord-interactions';
 
 class JsonResponse extends Response {
   constructor(body, init) {
