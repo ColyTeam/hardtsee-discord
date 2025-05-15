@@ -8,8 +8,8 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import { AWW_COMMAND, INVITE_COMMAND } from './commands.js';
-import { getCuteUrl } from './reddit.js';
+import { HARDTSEE_COMMAND } from './commands.js';
+import { getWaterTemperature } from './hardtsee.js';
 import { InteractionResponseFlags } from 'discord-interactions';
 
 class JsonResponse extends Response {
@@ -58,25 +58,29 @@ router.post('/', async (request, env) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     // Most user commands will come as `APPLICATION_COMMAND`.
     switch (interaction.data.name.toLowerCase()) {
-      case AWW_COMMAND.name.toLowerCase(): {
-        const cuteUrl = await getCuteUrl();
-        return new JsonResponse({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: cuteUrl,
-          },
-        });
-      }
-      case INVITE_COMMAND.name.toLowerCase(): {
-        const applicationId = env.DISCORD_APPLICATION_ID;
-        const INVITE_URL = `https://discord.com/oauth2/authorize?client_id=${applicationId}&scope=applications.commands`;
-        return new JsonResponse({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: INVITE_URL,
-            flags: InteractionResponseFlags.EPHEMERAL,
-          },
-        });
+      case HARDTSEE_COMMAND.name.toLowerCase(): {
+        try {
+          const waterTemp = await getWaterTemperature();
+          const message =
+            'Die aktuelle Wassertemperatur des Hardtsee beträgt ' +
+            waterTemp +
+            '°C. (Quelle: [www.scubw.de](https://www.scubw.de/wetter.html))';
+          return new JsonResponse({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content: message,
+            },
+          });
+        } catch (e) {
+          console.error(e);
+          return new JsonResponse({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: {
+              content:
+                'Fehler beim Laden der aktuellen Wassertemperatur. Vielleicht geht die [](https://www.scubw.de/wetter.html) nicht?',
+            },
+          });
+        }
       }
       default:
         return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });

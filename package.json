@@ -1,7 +1,7 @@
 {
-  "name": "awwbot",
+  "name": "hardtsee-discord",
   "version": "1.0.0",
-  "description": "A simple discord bot that uses intents to post pictures from r/aww",
+  "description": "A simple discord bot that returns the current water temperature in the Hardtsee",
   "type": "module",
   "private": true,
   "main": "src/server.js",
