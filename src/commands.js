@@ -6,4 +6,6 @@
 export const HARDTSEE_COMMAND = {
   name: 'hardtsee',
   description: 'Aktuelle Wassertemperatur vom Hardtsee',
+  contexts: [0, 1, 2],
+  integration_types: [0, 1],
 };
