@@ -76,7 +76,7 @@ router.post('/', async (request, env) => {
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {
               content:
-                'Fehler beim Laden der aktuellen Wassertemperatur. Vielleicht geht die [](https://www.scubw.de/wetter.html) nicht?',
+                'Fehler beim Laden der aktuellen Wassertemperatur. Vielleicht geht die [Seite](https://www.scubw.de/wetter.html) nicht?',
             },
           });
         }

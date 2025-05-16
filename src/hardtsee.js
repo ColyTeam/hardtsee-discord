@@ -24,4 +24,5 @@ export async function getWaterTemperature() {
   return data.current.extraTemp1.split(' ')[0];
 }
 
-export const scubwUrl = 'https://scubw.duckdns.org/wetter/json/weewx_data.json';
+export const scubwUrl =
+  'https://scubw.duckdns.org/weewx/belchertown/json/weewx_data.json';
